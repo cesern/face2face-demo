@@ -21,6 +21,7 @@ def main():
     fps = video.FPS().start()
 
     count = 0
+    
     while cap.isOpened():
         ret, frame = cap.read()
 
