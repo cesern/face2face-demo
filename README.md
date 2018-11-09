@@ -85,6 +85,7 @@ python pix2pix.py \
   --input_dir photos/combined/train \
   --which_direction AtoB
   --save_frequ 50
+```
 
 Para más informacion sobre el entrenamiento: Christopher Hesse's [pix2pix-tensorflow](https://github.com/affinelayer/pix2pix-tensorflow) implementation.
 
