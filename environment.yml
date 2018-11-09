@@ -32,5 +32,6 @@ dependencies:
   - six==1.10.0
   - tensorflow==1.2.1
   - werkzeug==0.12.2
+  - opencv-python
 prefix: /Users/datitran/anaconda/envs/face2face-demo
 
