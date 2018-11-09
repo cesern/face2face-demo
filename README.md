@@ -118,7 +118,7 @@ Para más informacion sobre el entrenamiento: Christopher Hesse's [pix2pix-tenso
     
     - `frozen_model.pb` en la carpeta del modelo.
     
-Pre-trained frozen model [Proximamenta](). Modelo entrenado con 400 imagenes y 200 epoch.
+Pre-trained frozen model [Proximamente](). Modelo entrenado con 400 imagenes y 200 epoch.
     
 #### 5. Run Demo
 
