@@ -1,7 +1,8 @@
 # Proyecto Redes Neuronales - face2face
 
-El proyecto es un fork de [face2face-demo](https://github.com/datitran/face2face-demo). Utiliza pix2pix...
-Es una aplicación de webcam, que coloca tu rostro en la cara "entrenada" de EPN en tiempo real.
+El proyecto es un fork de [face2face-demo](https://github.com/datitran/face2face-demo) de [datitran](https://github.com/datitran). Utiliza pix2pix para aprender los rasgos faciales y ponerlos en una cara. Por medio de una webcam o un video, coloca tu rostro en la cara "entrenada" de EPN en tiempo real o no.
+
+Debido al pobre poder de computo de mi laptop, correr el programa en tiempo real fue imposible, así que agregué [run_video.py](https://github.com/cesern/face2face-demo/blob/master/run_video.py) tomado de [face2face-demo](https://github.com/karolmajek/face2face-demo) de [karolmajek](https://github.com/karolmajek) .
 
 ## Getting Started
 
@@ -87,7 +88,7 @@ python pix2pix.py \
   --save_frequ 50
 ```
 
-Para más informacion sobre el entrenamiento: Christopher Hesse's [pix2pix-tensorflow](https://github.com/affinelayer/pix2pix-tensorflow) implementation.
+Christopher Hesse's [pix2pix-tensorflow](https://github.com/affinelayer/pix2pix-tensorflow) implementation.
 
 #### 4. Exportar el modelo
 
@@ -103,7 +104,7 @@ Para más informacion sobre el entrenamiento: Christopher Hesse's [pix2pix-tenso
     
     Output:
     
-    - Regresa un modelo reducido con un tamaño menor qu el original
+    - Regresa un modelo reducido con un tamaño menor que el original
 
 2. Se congela el modelo reducido a un solo archivo.
     ```
@@ -150,7 +151,7 @@ Ejemplo original:
 
 ![example](example.gif)
 
-Ejemplo propio:
+Resultado:
 
 ![ejemplo](ejemplo.gif)
 
