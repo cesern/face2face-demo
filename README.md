@@ -4,6 +4,18 @@ El proyecto es un fork de [face2face-demo](https://github.com/datitran/face2face
 
 Debido al pobre poder de computo de mi laptop, correr el programa en tiempo real fue imposible, así que agregué [run_video.py](https://github.com/cesern/face2face-demo/blob/master/run_video.py) tomado de [face2face-demo](https://github.com/karolmajek/face2face-demo) de [karolmajek](https://github.com/karolmajek) .
 
+## Datos de entrenamiento
+
+Lo primero fue crear un conjunto de datos. Luego se utilizó el [Dlib’s pose estimator](http://dlib.net/face_landmark_detection.py.html) que puede detectar 68 puntos de referencia (boca, cejas, ojos, etc.) en una cara junto con OpenCV para procesar el archivo de video.
+
+Desde que elegí este proyecto pense en utilizar de modelo a Enrique Peña Nieto (Presidente de México). Buscando videos en YouTube me decidí por el video del [discurso](https://youtu.be/G3b0lOzhN_I) que dio cuando acabaron las elecciones para presidente de 2018, ya que me parecio adecuado por que la posición de la cámara estaba estática para obtener muchas imagenes de las mismas posiciones de su cara y el fondo.
+
+## Modelo de entrenamiento
+
+
+
+Despues de clonar el repositorio de pix2pix y tratar los datos con los scrips que se proveen, el reto fue el tiempo de entrenamiento, ya que mi computadora no tiene suficiente poder de computo y un epoch llegaba a tardar hasta mas de una hora.
+
 ## Getting Started
 
 #### 1. Preparando environment
