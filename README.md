@@ -12,7 +12,20 @@ Desde que elegí este proyecto pense en utilizar de modelo a Enrique Peña Nieto
 
 ## Modelo de entrenamiento
 
+Pix2pix utiliza una red de confrontacion generativa condicional (cGAN) para aprender un mapeo de una imagen de entrada a una imagen de salida. La red cuenta con dos partes principales, el Generador y el Discriminador. El generador aplica alguna transformación a la imagen de entrada para obtener la imagen de salida. El Discriminador compara la imagen de entrada con una imagen desconocida e intenta adivinar si fue generada por el generador.
+Un ejemplo de un conjunto de datos sería que la imagen de entrada es una imagen en blanco y negro y la imagen objetivo es la versión en color de la imagen:
 
+![imagen1](imagen1.png)
+
+El generador en este caso trata de aprender a colorear una imagen en blanco y negro.
+
+![imagen2](imagen2.png)
+
+El discriminador esta tratando de aprender a distinguir entre las colorizaciones del generador y la imagen del conjunto de datos.
+
+![imagen3](imagen.png)
+
+...
 
 Despues de clonar el repositorio de pix2pix y tratar los datos con los scrips que se proveen, el reto fue el tiempo de entrenamiento, ya que mi computadora no tiene suficiente poder de computo y un epoch llegaba a tardar hasta mas de una hora.
 
