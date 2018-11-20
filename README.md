@@ -25,7 +25,7 @@ El discriminador esta tratando de aprender a distinguir entre las colorizaciones
 
 ![imagen3](images/imagen.png)
 
-### Generador
+#### Generador
 
 El generador tiene la tarea de tomar una imagen de entrada y realizar la transformación que deseamos para producir la imagen de destino. La estructura del generador se denomina "encoder-decoder" y en pix2pix el encoder-decoder es más o menos así:
 
@@ -45,7 +45,7 @@ Las conexiones de omisión le dan a la red la opción de omitir la parte de enco
 
 Estos diagramas son una ligera simplificación. Por ejemplo, la primera y la última capa de la red no tienen una capa de norma por lotes y algunas capas en el medio tienen unidades de deserción. El modo de colorización utilizado en el papel también tiene un número diferente de canales para las capas de entrada y salida.
 
-### Discriminador
+#### Discriminador
 
 El Discriminador tiene la tarea de tomar dos imágenes, una imagen de entrada y una imagen desconocida y decidir si la segunda imagen fue generada por el generador o no.
 
@@ -55,7 +55,7 @@ La estructura se parece mucho a la sección del encoder del generador, pero func
 
 La salida es una imagen de 30x30 donde cada valor de píxel (0 a 1) representa cuán creíble es la sección correspondiente de la imagen desconocida. En la implementación de pix2pix, cada píxel de esta imagen de 30x30 corresponde a la credibilidad de un parche de 70x70 de la imagen de entrada (los parches se superponen mucho ya que las imágenes de entrada son de 256x256). La arquitectura se llama "PatchGAN".
 
-### Entrenamiento
+#### Entrenamiento
 
 Para entrenar esta red, se siguen dos pasos: entrenar al discriminador y entrenar al generador. Para entrenar al discriminador, primero el generador produce una imagen de salida. El discriminador mira el par de entrada/objetivo y el par de entrada/salida y hace su conjetura acerca de qué tan realistas se ven. Los pesos del discriminador se ajustan según el error de clasificación del par de entrada/salida y el par de entrada/objetivo.
 
@@ -67,8 +67,6 @@ Los pesos del generador se ajustan según la salida del discriminador y la difer
 
 Cuando se entrena el generador en la salida del discriminador, en realidad estás calculando los gradientes a través del discriminador, lo que significa que mientras el discriminador mejora, estás entrenando al generador para vencer al discriminador.
 La teoría es que a medida que el discriminador mejora, también lo hace el generador. Si el discriminador es bueno en su trabajo y el generador es capaz de aprender la función de mapeo correcta a través del descenso de gradiente, debe obtener salidas generadas que podrían engañar a un humano.
-
-Despues de clonar el repositorio de pix2pix y tratar los datos con los scrips que se proveen, el reto fue el tiempo de entrenamiento, ya que mi computadora no tiene suficiente poder de computo y un epoch llegaba a tardar hasta mas de una hora.
 
 ## Getting Started
 
@@ -221,8 +219,11 @@ Resultado:
 
 ![ejemplo](ejemplo.gif)
 
-## Requerimientos
-- [Anaconda / Python 3.5](https://www.continuum.io/downloads)
-- [TensorFlow 1.2](https://www.tensorflow.org/)
-- [OpenCV 3.0](http://opencv.org/)
-- [Dlib 19.4](http://dlib.net/)
+## Experiencia
+
+El intentar entrenar en mi equipo de computo fue imposible, cada epoch tardaba aproximadamente 1 hora (o más), ademas mientras entrenaba no se podía utilizar para otras cosas. Fue muy frustrante.
+
+Afortunadamente despues pude realizar el entrenamiento en el [ACARUS: Área de Computo de Alto Rendimiento de la Universidad de Sonora] (http://acarus.uson.mx/) y me fue de maravilla, el entrenamiento termino en aproximadamente 5 horas, lo unico que quedaba era ver los resultados. Aqui vino otro problema, a pesar de tener un lugar donde entrenar mi modelo en poco tiempo, mi computadora apenas soportaba la aplicación de prueba del modelo. Funcionaba extremadamente lento (en el modo real-time era peor). Aun con los problemas con mi equipo de computo los resultados me gustaron y me pareció una gran experiencia.
+
+Para que funcione bien se necesita un buen video de donde obtener los datos. Con el modelo que se proporciona (Angela Merkel) o con el que yo entrené sólo funciona en cierta posición y distancia de la camara.
+
