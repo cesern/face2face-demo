@@ -15,17 +15,58 @@ Desde que elegí este proyecto pense en utilizar de modelo a Enrique Peña Nieto
 Pix2pix utiliza una red de confrontacion generativa condicional (cGAN) para aprender un mapeo de una imagen de entrada a una imagen de salida. La red cuenta con dos partes principales, el Generador y el Discriminador. El generador aplica alguna transformación a la imagen de entrada para obtener la imagen de salida. El Discriminador compara la imagen de entrada con una imagen desconocida e intenta adivinar si fue generada por el generador.
 Un ejemplo de un conjunto de datos sería que la imagen de entrada es una imagen en blanco y negro y la imagen objetivo es la versión en color de la imagen:
 
-![imagen1](imagen1.png)
+![imagen1](images/imagen1.png)
 
 El generador en este caso trata de aprender a colorear una imagen en blanco y negro.
 
-![imagen2](imagen2.png)
+![imagen2](images/imagen2.png)
 
 El discriminador esta tratando de aprender a distinguir entre las colorizaciones del generador y la imagen del conjunto de datos.
 
-![imagen3](imagen.png)
+![imagen3](images/imagen.png)
 
-...
+### Generador
+
+El generador tiene la tarea de tomar una imagen de entrada y realizar la transformación que deseamos para producir la imagen de destino. La estructura del generador se denomina "encoder-decoder" y en pix2pix el encoder-decoder es más o menos así:
+
+![imagen4](images/imagen4.png)
+
+La entrada en este ejemplo es una imagen de 256x256 con 3 canales de color (rojo, verde y azul) y la salida es la misma. 
+
+El generador toma algo de entrada e intenta reducirlo con una serie de encoders (función de convolución + activación) en una representación mucho más pequeña. La idea es que al comprimirlo de esta manera, se espera que tengamos una representación de los datos de mayor nivel después de la capa de encoding final. Las capas de decoding hacen lo opuesto (deconvolución + función de activación) e invierten la acción de las capas del encoder.
+
+![imagen5](images/imagen5.png)
+
+Para mejorar el rendimiento de la transformación image-to-image en el documento, los autores utilizaron una "U-Net" en lugar de un encoder-decoder. Esto es lo mismo, pero con "omitir conexiones" conectando directamente las capas del encoder a las capas del decoder:
+
+![imagen6](images/imagen6.png)
+
+Las conexiones de omisión le dan a la red la opción de omitir la parte de encoding/decoding si no tiene un uso para ello.
+
+Estos diagramas son una ligera simplificación. Por ejemplo, la primera y la última capa de la red no tienen una capa de norma por lotes y algunas capas en el medio tienen unidades de deserción. El modo de colorización utilizado en el papel también tiene un número diferente de canales para las capas de entrada y salida.
+
+### Discriminador
+
+El Discriminador tiene la tarea de tomar dos imágenes, una imagen de entrada y una imagen desconocida y decidir si la segunda imagen fue generada por el generador o no.
+
+La estructura se parece mucho a la sección del encoder del generador, pero funciona de manera un poco diferente.
+
+![imagen7](images/imagen7.png)
+
+La salida es una imagen de 30x30 donde cada valor de píxel (0 a 1) representa cuán creíble es la sección correspondiente de la imagen desconocida. En la implementación de pix2pix, cada píxel de esta imagen de 30x30 corresponde a la credibilidad de un parche de 70x70 de la imagen de entrada (los parches se superponen mucho ya que las imágenes de entrada son de 256x256). La arquitectura se llama "PatchGAN".
+
+### Entrenamiento
+
+Para entrenar esta red, se siguen dos pasos: entrenar al discriminador y entrenar al generador. Para entrenar al discriminador, primero el generador produce una imagen de salida. El discriminador mira el par de entrada/objetivo y el par de entrada/salida y hace su conjetura acerca de qué tan realistas se ven. Los pesos del discriminador se ajustan según el error de clasificación del par de entrada/salida y el par de entrada/objetivo.
+
+![imagen8](images/imagen8.png)
+
+Los pesos del generador se ajustan según la salida del discriminador y la diferencia entre la salida y la imagen objetivo.
+
+![imagen9](images/imagen9.png)
+
+Cuando se entrena el generador en la salida del discriminador, en realidad estás calculando los gradientes a través del discriminador, lo que significa que mientras el discriminador mejora, estás entrenando al generador para vencer al discriminador.
+La teoría es que a medida que el discriminador mejora, también lo hace el generador. Si el discriminador es bueno en su trabajo y el generador es capaz de aprender la función de mapeo correcta a través del descenso de gradiente, debe obtener salidas generadas que podrían engañar a un humano.
 
 Despues de clonar el repositorio de pix2pix y tratar los datos con los scrips que se proveen, el reto fue el tiempo de entrenamiento, ya que mi computadora no tiene suficiente poder de computo y un epoch llegaba a tardar hasta mas de una hora.
 
